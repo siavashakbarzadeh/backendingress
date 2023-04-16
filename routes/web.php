@@ -40,10 +40,10 @@ Route::get('color-scheme-switcher/{color_scheme}', [ColorSchemeController::class
 //    Route::get('register', [AuthController::class, 'registerView'])->name('register.index');
 //    Route::post('register', [AuthController::class, 'register'])->name('register.store');
 //});
-Route::get('login-page', [AdminController::class, 'index'])->name('login');
+
 Route::group(['prefix' => '30yavash'], function () {
  //login
-
+    Route::get('login-page', [AdminController::class, 'index'])->name('login');
  //endlogin
     //shipping
 Route::get('shippings-show', [ShippingController::class, 'show'])->name('shippings-show');
