@@ -40,10 +40,11 @@ Route::get('color-scheme-switcher/{color_scheme}', [ColorSchemeController::class
 //    Route::get('register', [AuthController::class, 'registerView'])->name('register.index');
 //    Route::post('register', [AuthController::class, 'register'])->name('register.store');
 //});
+Route::get('login-page', [AdminController::class, 'index'])->name('login');
 Route::group(['prefix' => '30yavash'], function () {
  //login
- Route::get('login-page', [AdminController::class, 'index'])->name('login');
- //endlogin  
+
+ //endlogin
     //shipping
 Route::get('shippings-show', [ShippingController::class, 'show'])->name('shippings-show');
 Route::get('shippings-create', [ShippingController::class, 'create'])->name('shippings-create');
@@ -60,7 +61,7 @@ Route::get('nfts-edit/{id}', [NftController::class, 'edit'])->name('nfts-edit');
 Route::get('nfts-update/{id}', [NftController::class, 'update'])->name('nfts-update');
 Route::get('nfts-destroy/{id}', [NftController::class, 'destroy'])->name('nfts-destroy');
 //endnft
-    
+
 });
 //category
 Route::get('categories-show', [CategoryController::class, 'show'])->name('categories-show');
