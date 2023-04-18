@@ -24,27 +24,25 @@ use App\Http\Controllers\ColorSchemeController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function ()    {
-    if (view()->exists('welcome')) {
-        return view('welcome');
-    }else{
-        return "Failed";
-    }
+
+
+//Route::post('login', [AuthController::class, 'login'])->name('login.check');
+//Route::get('/', [PageController::class, 'dashboardOverview1'])->name('dashboard-overview-1');
+//
+//Route::get('login', [AuthController::class, 'loginView'])->name('login.index');
+
+//Route::group(['prefix' => 'Ayda@30yavash@Amir']->middleware('loggedin')-> function () {
+Route::group(['prefix' => 'Ayda@30yavash@Amir'],function(){
+    Route::post('login', [AuthController::class, 'login'])->name('login.check');
+    Route::get('/', [PageController::class, 'dashboardOverview1'])->name('dashboard-overview-1');
+
+    Route::get('login', [AuthController::class, 'loginView'])->name('login.index');
 });
-Route::get('dark-mode-switcher', [DarkModeController::class, 'switch'])->name('dark-mode-switcher');
-Route::get('color-scheme-switcher/{color_scheme}', [ColorSchemeController::class, 'switch'])->name('color-scheme-switcher');
+Route::group(['middleware' => ['auth:web'], 'prefix' => 'Ayda@30yavash@Amir'], function () {
+    Route::get('/', [PageController::class, 'dashboardOverview1'])->name('dashboard-overview-1');
+    Route::get('dark-mode-switcher', [DarkModeController::class, 'switch'])->name('dark-mode-switcher');
+    Route::get('color-scheme-switcher/{color_scheme}', [ColorSchemeController::class, 'switch'])->name('color-scheme-switcher');
 
-//Route::middleware('loggedin')->group(function() {
-//    Route::get('login', [AuthController::class, 'loginView'])->name('login.index');
-//    Route::post('login', [AuthController::class, 'login'])->name('login.check');
-//    Route::get('register', [AuthController::class, 'registerView'])->name('register.index');
-//    Route::post('register', [AuthController::class, 'register'])->name('register.store');
-//});
-
-Route::group(['prefix' => '30yavash'], function () {
- //login
-    Route::get('login-page', [AdminController::class, 'index'])->name('login');
- //endlogin
     //shipping
 Route::get('shippings-show', [ShippingController::class, 'show'])->name('shippings-show');
 Route::get('shippings-create', [ShippingController::class, 'create'])->name('shippings-create');
@@ -61,17 +59,17 @@ Route::get('nfts-edit/{id}', [NftController::class, 'edit'])->name('nfts-edit');
 Route::get('nfts-update/{id}', [NftController::class, 'update'])->name('nfts-update');
 Route::get('nfts-destroy/{id}', [NftController::class, 'destroy'])->name('nfts-destroy');
 //endnft
-
-});
 //category
-Route::get('categories-show', [CategoryController::class, 'show'])->name('categories-show');
-Route::get('categories-create', [CategoryController::class, 'create'])->name('categories-create');
-Route::post('categories-store', [CategoryController::class, 'store'])->name('categories-store');
-Route::get('categories-edit/{id}', [CategoryController::class, 'edit'])->name('categories-edit');
-Route::post('categories-update/{id}', [CategoryController::class, 'update'])->name('categories-update');
-Route::get('categories-destroy/{id}', [CategoryController::class, 'destroy'])->name('categories-destroy');
+    Route::get('categories-show', [CategoryController::class, 'show'])->name('categories-show');
+    Route::get('categories-create', [CategoryController::class, 'create'])->name('categories-create');
+    Route::post('categories-store', [CategoryController::class, 'store'])->name('categories-store');
+    Route::get('categories-edit/{id}', [CategoryController::class, 'edit'])->name('categories-edit');
+    Route::post('categories-update/{id}', [CategoryController::class, 'update'])->name('categories-update');
+    Route::get('categories-destroy/{id}', [CategoryController::class, 'destroy'])->name('categories-destroy');
 
 //end category
+});
+
 //user
 Route::get('/users-show',[UserController::class,'show'])->name('users-show');
 
@@ -184,3 +182,7 @@ Route::get('image-zoom-page', [PageController::class, 'imageZoom'])->name('image
 Route::middleware('auth')->group(function() {
 
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
